@@ -12,9 +12,5 @@ namespace GitHubUserListJSON
         public bool isConnectedFlag { get; protected set; } = true;
         public IList<UsersData> gitHubUsers { get; protected set; }
         protected string jsonBackUpDirectory { get; set; }
-
-
-
-
     }
 }

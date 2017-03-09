@@ -23,7 +23,8 @@ namespace GitHubUserListJSON
             var jsonModels = new GitHubJson(url);
             var jsonFile = jsonModels.deserializedJsonFile;
             gitHubUsers = jsonModels.gitHubUsers;
-            LoadLoginComboBox(jsonModels.gitHubUsers);
+            // LoadLoginComboBox(jsonModels.gitHubUsers);
+            LoginComboBox =  LoadValuesToControls.LoadLoginComboBox(LoginComboBox, gitHubUsers);
             ChangeActualData();
         }
 
@@ -36,7 +37,8 @@ namespace GitHubUserListJSON
                 var client = new GitHubClient(new ProductHeaderValue("my-cool-app"));
 
                 IReadOnlyList<Repository> userRepositories = await client.Repository.GetAllForUser(userName);
-                LoadRepoComboBox(userRepositories);
+                // LoadRepoComboBox(userRepositories);
+                UserRepositoriesComboBox = LoadValuesToControls.LoadRepositoryComboBox(UserRepositoriesComboBox, userRepositories);
 
                 var user = await client.User.Get(userName);
                 string repos = user.PublicRepos.ToString();
@@ -64,24 +66,6 @@ namespace GitHubUserListJSON
         }
         #endregion
 
-        #region LoadValuesToControls
-        private void LoadRepoComboBox(IReadOnlyList<Repository> userRepositories)
-        {
-            UserRepositoriesComboBox.DataContext = userRepositories;
-            UserRepositoriesComboBox.DisplayMemberPath = "Name";
-            UserRepositoriesComboBox.ItemsSource = userRepositories;
-            UserRepositoriesComboBox.SelectedIndex = 0;
-
-        }
-        private void LoadLoginComboBox(IList<UsersData> iList)
-        {
-            LoginComboBox.DataContext = iList;
-            LoginComboBox.DisplayMemberPath = "login";
-            LoginComboBox.SelectedIndex = 0;
-            LoginComboBox.ItemsSource = iList;
-
-        }
        
-        #endregion
     }
 }
