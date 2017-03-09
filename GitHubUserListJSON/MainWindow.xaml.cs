@@ -20,7 +20,7 @@ namespace GitHubUserListJSON
             InitializeComponent();
 
             string url = @"https://api.github.com/users";
-            var jsonModels = new JSON(url);
+            var jsonModels = new GitHubJson(url);
             var jsonFile = jsonModels.deserializedJsonFile;
             gitHubUsers = jsonModels.gitHubUsers;
             LoadLoginComboBox(jsonModels.gitHubUsers);

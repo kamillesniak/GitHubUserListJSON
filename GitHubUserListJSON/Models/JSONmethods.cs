@@ -10,15 +10,11 @@ using System.IO;
 
 namespace GitHubUserListJSON
 {
-    class JSON
+    class GitHubJson: JsonData
     {
-        public string deserializedJsonFile { get; private set; }
-        public bool isConnectedFlag { get; private set; } = true;
-        public IList<UsersData> gitHubUsers { get; private set; }
-        private string jsonBackUpDirectory { get; set; }
+   
 
-
-        public JSON(string _url)
+        public GitHubJson(string _url)
         {
             //Make Json
             jsonBackUpDirectory = LoadJsonBackUpDirectory();
@@ -107,19 +103,6 @@ namespace GitHubUserListJSON
             return avatarURL;
         }
 
-        public static BitmapImage UploadAvatar(string url)
-        {
-            try
-            {
-                BitmapImage image = new BitmapImage(new Uri(url));
-                return image;
-            }
-            catch
-            {
-                Report.Error("Unable to load user avatar");
-                return null;
-            }
-        }
 
     }
 
