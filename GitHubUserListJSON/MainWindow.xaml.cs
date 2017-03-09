@@ -14,17 +14,16 @@ namespace GitHubUserListJSON
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IList<UsersData> githubUsers;
+        IList<UsersData> gitHubUsers;
         public MainWindow()
         {
             InitializeComponent();
 
             string url = @"https://api.github.com/users";
-
-            var jsonFile = JSON.LoadJsonFile(url);
-            githubUsers =  JSON.ParseJson(jsonFile);
-
-            LoadLoginComboBox(githubUsers);
+            var jsonModels = new JSON(url);
+            var jsonFile = jsonModels.deserializedJsonFile;
+            gitHubUsers = jsonModels.gitHubUsers;
+            LoadLoginComboBox(jsonModels.gitHubUsers);
             ChangeActualData();
         }
 
@@ -58,10 +57,9 @@ namespace GitHubUserListJSON
         private void ChangeActualData()
         {
             string actualLogin = LoginComboBox.Text;
-            string avatarURL = JSON.LoadUserAvatarURL(githubUsers, actualLogin);
+            AvatarImage.Source = UploadAvatar.UploadUserAvatarFromURL(actualLogin, gitHubUsers);
 
             LoadActualUserRepositoryAsync(actualLogin);
-            UploadAvatar(avatarURL);
 
         }
         #endregion
@@ -83,19 +81,7 @@ namespace GitHubUserListJSON
             LoginComboBox.ItemsSource = iList;
 
         }
-        private void UploadAvatar(string url)
-        {
-            try
-            {
-                BitmapImage image = JSON.UploadAvatar(url);
-                AvatarImage.Source = image;
-            }
-            catch
-            {
-                Report.Error("Unable to load avatar");
-            }
-
-        }
+       
         #endregion
     }
 }

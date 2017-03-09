@@ -73,9 +73,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="JSONmethods.cs" />
-    <Compile Include="Report.cs" />
-    <Compile Include="UsersData.cs" />
+    <Compile Include="Models\JSONmethods.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\UsersData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
