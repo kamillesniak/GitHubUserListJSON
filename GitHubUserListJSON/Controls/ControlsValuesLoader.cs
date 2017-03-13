@@ -8,9 +8,9 @@ using Octokit;
 
 namespace GitHubUserListJSON
 {
-   internal static class LoadValuesToControls
+   internal static class ControlsValuesLoader
     {
-        public static ComboBox LoadLoginComboBox(ComboBox cbox, IList<UsersData> iList)
+        public static ComboBox LoadLoginComboBox(ComboBox cbox, IList<User> iList)
         {
             cbox.DataContext = iList;
             cbox.DisplayMemberPath = "login";

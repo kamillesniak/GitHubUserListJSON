@@ -9,20 +9,20 @@ using System.IO;
 
 namespace GitHubUserListJSON
 {
-    class GitHubJson: JsonData
+    class JsonHandler: JsonData
     {
    
 
-        public GitHubJson(string _url)
+        public JsonHandler(string _url)
         {
             //Make Json
-            jsonBackUpDirectory = LoadJsonBackUpDirectory();
-            deserializedJsonFile = LoadJsonFile(_url);
-            SaveJson(deserializedJsonFile);
-            gitHubUsers = GetGitHubUsers(deserializedJsonFile);
+            jsonBackUpDirectory = GetJsonBackUpDirectory();
+            deserializedJsonFile = JsonFileLoader(_url);
+            SaveJsonFile(deserializedJsonFile);
+            gitHubUsers = FindGitHubUsers(deserializedJsonFile);
 
         }
-        private string LoadJsonFile(string url)
+        private string JsonFileLoader(string url)
         {
             try
             {
@@ -31,28 +31,28 @@ namespace GitHubUserListJSON
                     //This json file need to have header to be downloaded
                     client.Headers.Add("User-Agent", "NoUserAgent");
                     string clientResponse = client.DownloadString(new Uri(url));
-                    SaveJson(clientResponse);
+                    SaveJsonFile(clientResponse);
                     return clientResponse;
                 }
             }
             catch
             {
-                Report.Error("Unable to load json file, check your internet connectionn, using last downloaded data\n");
+                ReportMessage.Error("Unable to load json file, check your internet connectionn, using last downloaded data\n");
                 isConnectedFlag = false;
                 return LoadLastJson();
             }
 
         }
-        private void SaveJson(string jsonString)
+        private void SaveJsonFile(string jsonString)
         {
-            string directory = LoadJsonBackUpDirectory();
+            string directory = GetJsonBackUpDirectory();
             File.WriteAllText(directory, jsonString);
         }
 
-        private IList<UsersData> GetGitHubUsers(string jsonfile)
+        private IList<User> FindGitHubUsers(string jsonfile)
         {
             JArray gitUsersArray = JArray.Parse(jsonfile);
-            IList<UsersData> gitUsersList = gitUsersArray.Select(p => new UsersData
+            IList<User> gitUsersList = gitUsersArray.Select(p => new User
             {
                 login = (string)p["login"],
                 avatarurl = (string)p["avatar_url"]
@@ -61,7 +61,7 @@ namespace GitHubUserListJSON
         }
 
         #region Last JSON file
-        private string LoadJsonBackUpDirectory()
+        private string GetJsonBackUpDirectory()
         {
             string actualpath = Environment.CurrentDirectory;
             string directory = Path.Combine(actualpath, "lastJSON.json");
@@ -69,7 +69,7 @@ namespace GitHubUserListJSON
         }
         private string LoadLastJson()
         {
-            string directory = LoadJsonBackUpDirectory();
+            string directory = GetJsonBackUpDirectory();
             if (File.Exists(directory))
             {
                 using (StreamReader r = new StreamReader(directory))

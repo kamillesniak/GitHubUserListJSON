@@ -2,7 +2,7 @@
 
 namespace GitHubUserListJSON
 {
-    class Report
+    class ReportMessage
     {
         public static void Error(string errormessage)
         {

@@ -14,17 +14,17 @@ namespace GitHubUserListJSON
     /// </summary>
     public partial class MainWindow : Window
     {
-        IList<UsersData> gitHubUsers;
+        IList<User> gitHubUsers;
         public MainWindow()
         {
             InitializeComponent();
 
             string url = @"https://api.github.com/users";
-            var jsonModels = new GitHubJson(url);
+            var jsonModels = new JsonHandler(url);
             var jsonFile = jsonModels.deserializedJsonFile;
             gitHubUsers = jsonModels.gitHubUsers;
             // LoadLoginComboBox(jsonModels.gitHubUsers);
-            LoginComboBox =  LoadValuesToControls.LoadLoginComboBox(LoginComboBox, gitHubUsers);
+            LoginComboBox =  ControlsValuesLoader.LoadLoginComboBox(LoginComboBox, gitHubUsers);
             ChangeActualData();
         }
 
@@ -38,7 +38,7 @@ namespace GitHubUserListJSON
 
                 IReadOnlyList<Repository> userRepositories = await client.Repository.GetAllForUser(userName);
                 // LoadRepoComboBox(userRepositories);
-                UserRepositoriesComboBox = LoadValuesToControls.LoadRepositoryComboBox(UserRepositoriesComboBox, userRepositories);
+                UserRepositoriesComboBox = ControlsValuesLoader.LoadRepositoryComboBox(UserRepositoriesComboBox, userRepositories);
 
                 var user = await client.User.Get(userName);
                 string repos = user.PublicRepos.ToString();
@@ -46,7 +46,7 @@ namespace GitHubUserListJSON
             }
             catch
             {
-                Report.Error("Unable to load github data");
+                ReportMessage.Error("Unable to load github data");
             }
         }
         #endregion
@@ -59,7 +59,7 @@ namespace GitHubUserListJSON
         private void ChangeActualData()
         {
             string actualLogin = LoginComboBox.Text;
-            AvatarImage.Source = UploadAvatar.UploadUserAvatarFromURL(actualLogin, gitHubUsers);
+            AvatarImage.Source = AvatarUploader.UserAvatarLoader(actualLogin, gitHubUsers);
 
             LoadActualUserRepositoryAsync(actualLogin);
 

@@ -7,24 +7,24 @@ namespace GitHubUserListJSON
 {
 
 
-    internal static class UploadAvatar
+    internal static class AvatarUploader
     {
 
-        public static BitmapImage UploadUserAvatarFromURL(string actualLogin, IList<UsersData> iList)
+        public static BitmapImage UserAvatarLoader(string actualLogin, IList<User> iList)
         {
             try
             {
-                string _url = FindUserAvatarUrl(actualLogin, iList);
+                string _url = AvatarUrlFinder(actualLogin, iList);
                 BitmapImage image = new BitmapImage(new Uri(_url));
                 return image;
             }
             catch
             {
-                Report.Error("Unable to load user avatar");
+                ReportMessage.Error("Unable to load user avatar");
                 return null;
             }
         }
-        private static string FindUserAvatarUrl(string login, IList<UsersData> users)
+        private static string AvatarUrlFinder(string login, IList<User> users)
         {
             string avatarURL = string.Empty;
 

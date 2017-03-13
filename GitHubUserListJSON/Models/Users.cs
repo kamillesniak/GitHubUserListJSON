@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitHubUserListJSON
 {
-    class UsersData
+    class User
     {
         public string login { get; set; }
         public string avatarurl { get; set; }
