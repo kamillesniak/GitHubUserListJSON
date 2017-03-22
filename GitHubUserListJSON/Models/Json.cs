@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace GitHubUserListJSON
 {
@@ -10,7 +6,5 @@ namespace GitHubUserListJSON
     {
         public string deserializedJsonFile { get; protected set; }
         public bool isConnectedFlag { get; protected set; } = true;
-        public IList<User> gitHubUsers { get; protected set; }
-        protected string jsonBackUpDirectory { get; set; }
     }
 }

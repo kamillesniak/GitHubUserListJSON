@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Octokit;
-
+using GitHubUserListJSON.Services.JsonHandler.Interfaces;
+using GitHubUserListJSON.Services.Github.GitHubUsersFinder;
 
 namespace GitHubUserListJSON
 {
@@ -14,16 +15,16 @@ namespace GitHubUserListJSON
     /// </summary>
     public partial class MainWindow : Window
     {
-        IList<User> gitHubUsers;
+        List<User> gitHubUsers;
         public MainWindow()
         {
             InitializeComponent();
 
             string url = @"https://api.github.com/users";
-            var jsonModels = new JsonHandler(url);
-            var jsonFile = jsonModels.deserializedJsonFile;
-            gitHubUsers = jsonModels.gitHubUsers;
-            // LoadLoginComboBox(jsonModels.gitHubUsers);
+            IJsonFromUrlLoader jsonStringLoader = new JsonFromUrlLoader(url);
+            var gitUsers = new GitHubUsersFinder(jsonStringLoader);
+            gitHubUsers = gitUsers.GitHubUsers;
+
             LoginComboBox =  ControlsValuesLoader.LoadLoginComboBox(LoginComboBox, gitHubUsers);
             ChangeActualData();
         }

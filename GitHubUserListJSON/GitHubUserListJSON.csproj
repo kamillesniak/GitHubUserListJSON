@@ -74,10 +74,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Json.cs" />
-    <Compile Include="Services\JsonHandler\JsonHandler.cs" />
+    <Compile Include="Services\Github\GitHubUsersFinder\GitHubUsersFinder.cs" />
+    <Compile Include="Services\Github\GitHubUsersFinder\IGitHubUsersFindercs.cs" />
+    <Compile Include="Services\JsonHandler\JsonBackUp\JsonBackUpInformations.cs" />
+    <Compile Include="Services\JsonHandler\JsonBackUp\JsonBackUpLoader\JsonLastBackUpLoader.cs" />
+    <Compile Include="Services\JsonHandler\JsonFromUrlLoader\IJsonFromUrlLoader.cs" />
+    <Compile Include="Services\JsonHandler\JsonFromUrlLoader\JsonFromUrlLoader.cs" />
+    <Compile Include="Services\JsonHandler\JsonBackUp\JsonBackUpCreator\CreateJsonBackUp.cs" />
     <Compile Include="Controls\ControlsValuesLoader.cs" />
     <Compile Include="Services\BugHandlers\ReportMessage.cs" />
-    <Compile Include="Services\Uploaders\AvatarUploader.cs" />
+    <Compile Include="Services\AvatarUploader\AvatarUploader.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -112,6 +118,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
